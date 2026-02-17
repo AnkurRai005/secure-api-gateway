@@ -22,7 +22,10 @@ exports.login = (req, res, next) => {
             { expiresIn: process.env.JWT_EXPIRES_IN }
         );
 
-        res.json(token);
+        res.json({
+            success: true,
+            token
+        });
     } catch (error) {
         next(error);
     }
