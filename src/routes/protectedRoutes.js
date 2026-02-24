@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
-const {restrictTo} = require('../middleware/roleMiddleware');
+const { restrictTo } = require('../middleware/roleMiddleware');
+const rateLimiter = require('../middleware/rateLimiter');
 
 router.get('/profile', protect, (req, res) => {
     res.json({
@@ -10,7 +11,7 @@ router.get('/profile', protect, (req, res) => {
     });
 });
 
-router.get('/admin', protect, restrictTo('admin'), (req, res) => {
+router.get('/admin', protect, rateLimiter, restrictTo('admin'), (req, res) => {
     res.json({
         success: true,
         message: "Welcome Admin",
